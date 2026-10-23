@@ -6,8 +6,9 @@ enum Suit {
     DIAMONDS,
     CLUBS
 };
+
 enum Value {
-    TWO
+    TWO,
     THREE,
     FOUR,
     FIVE,
@@ -18,8 +19,8 @@ enum Value {
     TEN,
     JACK,
     QUEEN,
-    KING
-    ACE,
+    KING,
+    ACE
 };
 
 struct Card {

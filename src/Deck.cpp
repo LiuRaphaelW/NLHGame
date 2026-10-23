@@ -1,19 +1,34 @@
-#include "Deck.cpp"
+#include "Deck.hpp"
 
+#include <cstdlib>
+#include <ctime>
 
 Deck::Deck() {
-    //make one of every card
-    //finding the best way to iterate through the enums to make the happen or think of another way
-    std::srand(std::time(0));
-    
+    cards_.reserve(DECK_SIZE);
+
+    for (int suit = SPADES; suit <= CLUBS; ++suit) {
+        for (int value = TWO; value <= ACE; ++value) {
+            cards_.push_back({
+                static_cast<Suit>(suit),
+                static_cast<Value>(value)
+            });
+        }
+    }
+
+    std::srand(std::time(nullptr));
 }
 
 void Deck::shuffleDeck() {
-    //Eventually we will need to change the copy to a move function to not make extra copies for space and time
-    for (int i = 0; i < DECK_SIZE; ++i) {
-        int switch = (std::rand() % 52);
-        Card temp = cards[i];
-        cards[i] = cards[switch];
-        cards[switch] = temp;
+    remaining_ = DECK_SIZE;
+    for (std::size_t i = 0; i < DECK_SIZE; ++i) {
+        const std::size_t swapIndex = std::rand() % DECK_SIZE;
+        const Card temp = cards_[i];
+        cards_[i] = cards_[swapIndex];
+        cards_[swapIndex] = temp;
     }
+}
+
+Card Deck::pop() {
+    --remaining;
+    return cards[DECK_SIZE - remaining_ + 1];
 }
