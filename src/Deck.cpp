@@ -1,6 +1,7 @@
 #include "Deck.hpp"
 
 #include <cstdlib>
+#include <stdexcept>
 #include <ctime>
 
 Deck::Deck() {
@@ -29,6 +30,9 @@ void Deck::shuffleDeck() {
 }
 
 Card Deck::pop() {
-    --remaining;
-    return cards[DECK_SIZE - remaining_ + 1];
+    if (remaining_ <= 0) {
+        throw std::out_of_range("cannot pop from an empty deck");
+    }
+
+    return cards_[--remaining_];
 }

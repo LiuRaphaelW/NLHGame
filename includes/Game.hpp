@@ -1,12 +1,36 @@
+#pragma once
+
 #include "Deck.hpp"
+#include "Player.hpp"
+
 #include <vector>
-class Game{
+
+constexpr int BIG_BLIND = 2;
+constexpr int SML_BLIND = 1;
+
+enum Action {
+    FOLD,
+    CALL,
+    RAISE
+};
+
+struct Turn {
+    Action action;
+    int amount;
+};
+
+
+class Game {
 public:
-    vector<Card> board;
-    void reset();
+    std::vector<Card> board;
     void deal();
+    void preFlopBet(int);
+    void otherRound(int);
+    int showDown();
 private:
-    Deck deck_();
-    vector<Player> players_;
-    vector<Player> stillPlaying_;
-}
+    Deck deck_;
+    std::vector<Player> players_;
+    int pot = 0;
+    std::vector<Player> stillPlaying_;
+    int SB;
+};

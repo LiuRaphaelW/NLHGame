@@ -1,6 +1,8 @@
+#pragma once
+
 #include "Card.hpp"
-#include "Game.hpp"
-#include <pair>
+
+#include <utility>
 
 enum Position {
     BTN,
@@ -19,11 +21,22 @@ enum PlayStyle {
     LAP,
     TAP
 };
+
+struct basicStats {
+    int openingRange = 25;
+    int aggression = 0;
+};
+
 class Player {
-    Player(int);
+public:
+    explicit Player(int id);
+    void newHand(const std::pair<Card, Card>& start);
+
+private:
+    PlayStyle playStyle = TAG;
     int PID;
-    pair<Card, Card> hand;
-    Position position;
-    PlayStyle playStyle;
-    int stack;
-}
+    int stack = 0;
+    std::pair<Card, Card> hand{};
+    Position position = BTN;
+    double equity = 0.0;
+};
